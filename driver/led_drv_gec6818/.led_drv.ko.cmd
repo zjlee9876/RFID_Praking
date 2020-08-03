@@ -1,0 +1,1 @@
+cmd_/mnt/hgfs/week12/led_drv_gec6818/led_drv.ko := /home/gec/6818GEC/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/arm-eabi-ld -EL -r  -T /home/gec/6818GEC/kernel/scripts/module-common.lds --build-id  -o /mnt/hgfs/week12/led_drv_gec6818/led_drv.ko /mnt/hgfs/week12/led_drv_gec6818/led_drv.o /mnt/hgfs/week12/led_drv_gec6818/led_drv.mod.o
