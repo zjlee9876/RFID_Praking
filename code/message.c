@@ -13,6 +13,7 @@
 
 static int time_10s_falg = 0;
 static int *p_menu_nt = NULL;
+static 	int card_value;
 extern Rfid_card rfidcard[CARDNUM];
 extern int time_1s_flag;
 static void* timer(void *arg)//超时
@@ -44,7 +45,7 @@ Rfid_card* card_message(void)
 	int count1 = 0,count2 = 0;
 	int time = 10;
 	int beep_true = 1;
-	int card_value;
+
 	unsigned int cardid = 0;
 	struct ts_xy ts_data,ts_data2;
 	Rfid_card* card_mesg = NULL;
@@ -132,8 +133,7 @@ Rfid_card* card_message(void)
 					else{//密码正确
 						break;
 					}
-					errornum--;
-					
+					errornum--;		
 				}
 				if(cardid== rfidcard[yueqian].id){
 					card_mesg =  &rfidcard[yueqian];
@@ -170,19 +170,16 @@ Rfid_card* card_message(void)
 }
 void show_message(void)
 {
-	pthread_t pt1,pt2;
-	struct ts_xy ts_data;
+	pthread_t pt2;
+	struct ts_xy ts_data,ts_data2;
 	char str[23];
-	int time = 1000;
+	char oldpswd[7];
+	char new1pswd[7];
+	char new2pswd[7];
 	Rfid_card* ret;
 	int ret1;
 	ret = card_message();
 	if(ret == NULL) return;
-	ret1 = pthread_create(&pt1,NULL,timer,(void*)&time);//检测是否超时线程
-	if(ret1 != 0){							
-		printf("超时建立线程失败\n");
-		return;							
-	}
 	ret1 = pthread_create(&pt2,NULL,thread_getxy,(void*)&ts_data);//触摸
 	if(ret1 != 0){							
 		printf("读卡建立线程失败\n");
@@ -269,19 +266,91 @@ void show_message(void)
 			lcd_show_bmp(str,0,515,309,24,36);
 		}
 
-		if(time_10s_falg){
-			time_10s_falg = 0;
-			pthread_cancel(pt2);
-			break;
-		}
 		if(ts_data.x>511&&ts_data.x<565&&ts_data.y>119&&ts_data.y<169){
-			pthread_cancel(pt1);
 			pthread_cancel(pt2);
 			lcd_show_bmp("picture/cancel_64_60.bmp",0,506,114,64,60);
 			usleep(1000*100);
 			break;
 		}
+		if(ts_data.x>511&&ts_data.x<565&&ts_data.y>205&&ts_data.y<255){//修改密码
+			int *messagegui = NULL;
+			lcd_show_bmp("picture/changepassword_64_60.bmp",0,506,200,64,60);
+			usleep(1000*100);
+			lcd_show_bmp("picture/changepassword_void_64_60.bmp",0,506,200,64,60);
+			messagegui = lcd_show_bmp("picture/changepassword1_360_280.bmp",1,223,102,360,280);
+			sleep(1);
+			int errornum = 2;
+			while(1){
+				ret1 = input_password(oldpswd);
+				if(ret1 == 0){//取消输入
+					lcd_recover(messagegui,223,102,360,280);
+					ts_data.x = 0;
+					ts_data.y = 0;
+					break;
+				}
+				if(strcmp(oldpswd,rfidcard[card_value].password) != 0){//密码错误
+					if(errornum == 0){
+						lcd_show_bmp("picture/password_errorlast_360_280.bmp",0,223,102,360,280);
+						sleep(3);
+						lcd_recover(messagegui,223,102,360,280);
+						break;
+					}
+					lcd_show_bmp("picture/password_error_360_280.bmp",0,223,102,360,280);
+					sprintf(str,"%s%d%s","picture/num",errornum,"_24_36.bmp");
+					lcd_show_bmp(str,0,442,250,24,36);
+					while(1){
+						ts_data2 = ts_get_xy();
+						if(ts_data2.x>324&&ts_data2.x<378&&ts_data2.y>295&&ts_data2.y<345){
+							lcd_show_bmp("picture/yes_64_60.bmp",0,319,290,64,60);
+							usleep(1000*100);
+							break;
+						}
+						if(ts_data2.x>431&&ts_data2.x<485&&ts_data2.y>295&&ts_data2.y<345){
+							lcd_show_bmp("picture/cancel_64_60.bmp",0,426,290,64,60);
+							usleep(1000*100);
+							lcd_recover(messagegui,223,102,360,280);
+							break;
+						}
+					}
+				}
+				else{//密码正确
+					lcd_show_bmp("picture/changepassword2_360_280.bmp",0,223,102,360,280);
+					sleep(1);
+					ret1 = input_password(new1pswd);
+					if(ret1 == 0){//取消输入
+						lcd_recover(messagegui,223,102,360,280);
+						ts_data.x = 0;
+						ts_data.y = 0;
+						break;
+					}
+					lcd_show_bmp("picture/changepassword3_360_280.bmp",0,223,102,360,280);
+					sleep(1);
+					while(1){
+						ret1 = input_password(new2pswd);
+						if(ret1 == 0){//取消输入
+							lcd_recover(messagegui,223,102,360,280);
+							ts_data.x = 0;
+							ts_data.y = 0;
+							break;
+						}
+						if(strcmp(new1pswd,new2pswd) != 0){
+							lcd_show_bmp("picture/password_changeerror_360_280.bmp",0,223,102,360,280);
+							sleep(1);
+							continue;
+						}
+						else{
+							strcpy(rfidcard[card_value].password,new2pswd);
+							lcd_show_bmp("picture/changepwssword_success_360_280.bmp",0,223,102,360,280);
+							sleep(2);
+							lcd_recover(messagegui,223,102,360,280);
+							break;
+						}
+					}
+				break;
+				}
+				errornum--;		
+			}
+		}
 	}
-	lcd_recover(p_menu_nt,223,102,360,280);
-	
+	lcd_recover(p_menu_nt,223,102,360,280);	
 }
