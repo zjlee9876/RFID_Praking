@@ -82,7 +82,7 @@ Rfid_card* card_message(void)
 				pthread_cancel(pt2);
 				pthread_cancel(pt4);
 				lcd_show_bmp("picture/readcard_timeout_360_280.bmp",0,223,102,360,280);
-				sleep(3);
+				sleep(2);
 				lcd_recover(p_menu_nt,223,102,360,280);
 				return NULL;
 			}
@@ -108,7 +108,7 @@ Rfid_card* card_message(void)
 					if(strcmp(pswd,rfidcard[card_value].password) != 0){//密码错误
 						if(errornum == 0){
 							lcd_show_bmp("picture/password_errorlast_360_280.bmp",0,223,102,360,280);
-							sleep(3);
+							sleep(2);
 							lcd_recover(p_menu_nt,223,102,360,280);
 							return NULL;
 						}
@@ -291,7 +291,7 @@ void show_message(void)
 				if(strcmp(oldpswd,rfidcard[card_value].password) != 0){//密码错误
 					if(errornum == 0){
 						lcd_show_bmp("picture/password_errorlast_360_280.bmp",0,223,102,360,280);
-						sleep(3);
+						sleep(2);
 						lcd_recover(messagegui,223,102,360,280);
 						break;
 					}

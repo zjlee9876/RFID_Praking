@@ -87,7 +87,7 @@ void park_reserve(void)
 				pthread_cancel(pt2);
 				pthread_cancel(pt4);
 				lcd_show_bmp("picture/readcard_timeout_360_280.bmp",0,223,102,360,280);
-				sleep(3);
+				sleep(2);
 				lcd_recover(p_menu_nt,223,102,360,280);
 				return;
 			}
@@ -113,7 +113,7 @@ void park_reserve(void)
 						printf("超时建立线程失败\n");
 						return;							
 					}
-					sleep(3);
+					sleep(2);
 					lcd_recover(p_menu_nt,223,102,360,280);
 					return;
 				}
@@ -134,7 +134,7 @@ void park_reserve(void)
 					if(strcmp(pswd,rfidcard[card_value].password) != 0){//密码错误
 						if(errornum == 0){
 							lcd_show_bmp("picture/password_errorlast_360_280.bmp",0,223,102,360,280);
-							sleep(3);
+							sleep(2);
 							lcd_recover(p_menu_nt,223,102,360,280);
 							return;
 						}
@@ -188,7 +188,7 @@ void park_reserve(void)
 							usleep(1000*100);
 							lcd_show_bmp("picture/reserve_error_100_48.bmp",0,289,169,100,48);
 							int *p_menu_nt1 = lcd_show_bmp("picture/stopalready_360_280.bmp",1,223,102,360,280);
-							sleep(3);
+							sleep(2);
 							lcd_recover(p_menu_nt1,223,102,360,280);
 							continue;
 						}
@@ -217,7 +217,7 @@ void park_reserve(void)
 									printf("stopflag = %d\n",rfidcard[card_value].stopflag);
 									printf("-----------------------------------------------------\n");
 									/**************************调试*******************************/
-									sleep(3);
+									sleep(2);
 									lcd_recover(p_menu_nt,223,102,360,280);
 									lcd_show_bmp("picture/stopreserve_164_88.bmp",0,368,74,164,88);
 									LOOP_NUM1 = 1;
@@ -245,7 +245,7 @@ void park_reserve(void)
 							usleep(1000*100);
 							lcd_show_bmp("picture/reserve_error_100_48.bmp",0,411,169,100,48);
 							int *p_menu_nt1 = lcd_show_bmp("picture/stopalready_360_280.bmp",1,223,102,360,280);
-							sleep(3);
+							sleep(2);
 							lcd_recover(p_menu_nt1,223,102,360,280);
 							continue;
 						}
@@ -274,7 +274,7 @@ void park_reserve(void)
 									printf("stopflag = %d\n",rfidcard[card_value].stopflag);
 									printf("-----------------------------------------------------\n");
 									/**************************调试*******************************/
-									sleep(3);
+									sleep(2);
 									lcd_recover(p_menu_nt,223,102,360,280);
 									lcd_show_bmp("picture/stopreserve_164_88.bmp",0,552,74,164,88);
 									LOOP_NUM2 = 1;
@@ -302,7 +302,7 @@ void park_reserve(void)
 							usleep(1000*100);
 							lcd_show_bmp("picture/reserve_error_100_48.bmp",0,289,226,100,48);
 							int *p_menu_nt1 = lcd_show_bmp("picture/stopalready_360_280.bmp",1,223,102,360,280);
-							sleep(3);
+							sleep(2);
 							lcd_recover(p_menu_nt1,223,102,360,280);
 							continue;
 						}
@@ -331,7 +331,7 @@ void park_reserve(void)
 									printf("stopflag = %d\n",rfidcard[card_value].stopflag);
 									printf("-----------------------------------------------------\n");
 									/**************************调试*******************************/
-									sleep(3);
+									sleep(2);
 									lcd_recover(p_menu_nt,223,102,360,280);
 									lcd_show_bmp("picture/stopreserve_164_88.bmp",0,368,177,164,88);
 									LOOP_NUM3 = 1;
@@ -358,7 +358,7 @@ void park_reserve(void)
 							usleep(1000*100);
 							lcd_show_bmp("picture/reserve_error_100_48.bmp",0,411,226,100,48);
 							int *p_menu_nt1 = lcd_show_bmp("picture/stopalready_360_280.bmp",1,223,102,360,280);
-							sleep(3);
+							sleep(2);
 							lcd_recover(p_menu_nt1,223,102,360,280);
 							continue;
 						}
@@ -387,7 +387,7 @@ void park_reserve(void)
 									printf("stopflag = %d\n",rfidcard[card_value].stopflag);
 									printf("-----------------------------------------------------\n");
 									/**************************调试*******************************/
-									sleep(3);
+									sleep(2);
 									lcd_recover(p_menu_nt,223,102,360,280);
 									lcd_show_bmp("picture/stopreserve_164_88.bmp",0,552,177,164,88);
 									LOOP_NUM4 = 1;

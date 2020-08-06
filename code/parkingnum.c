@@ -385,7 +385,7 @@ void select_parkingnum(Parknum parknum)
 		p_menu_nt = lcd_show_bmp("picture/stopalready_360_280.bmp",1,223,102,360,280);
 		sprintf(str1,"%s%d%s","picture/num",existnum,"_24_36.bmp");
 		lcd_show_bmp(str1,0,316,287,24,36);
-		sleep(3);
+		sleep(2);
 		lcd_recover(p_menu_nt,223,102,360,280);
 		return;
 	}
@@ -438,7 +438,7 @@ void select_parkingnum(Parknum parknum)
 				pthread_cancel(pt2);
 				pthread_cancel(pt4);
 				lcd_show_bmp("picture/readcard_timeout_360_280.bmp",0,223,102,360,280);
-				sleep(3);
+				sleep(2);
 				lcd_recover(p_menu_nt,223,102,360,280);
 				return;
 			}
@@ -493,7 +493,7 @@ void select_parkingnum(Parknum parknum)
 						printf("超时建立线程失败\n");
 						return;							
 					}
-					sleep(3);
+					sleep(2);
 					lcd_recover(p_menu_nt,223,102,360,280);
 					return;
 				}
@@ -507,7 +507,7 @@ void select_parkingnum(Parknum parknum)
 					if(strcmp(pswd,rfidcard[card_value].password) != 0){//密码错误
 						if(errornum == 0){
 							lcd_show_bmp("picture/password_errorlast_360_280.bmp",0,223,102,360,280);
-							sleep(3);
+							sleep(2);
 							lcd_recover(p_menu_nt,223,102,360,280);
 							return;
 						}
@@ -573,7 +573,7 @@ void select_parkingnum(Parknum parknum)
 				printf("stopflag = %d\n",rfidcard[card_value].stopflag);
 				printf("-----------------------------------------------------\n");
 				/**************************调试*******************************/
-				sleep(3);
+				sleep(2);
 				lcd_recover(p_menu_nt,223,102,360,280);
 				switch(parknum){
 					case num1:

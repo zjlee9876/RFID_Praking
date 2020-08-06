@@ -109,7 +109,7 @@ void exit_car(Parknum parknum)
 					pthread_cancel(pt2);
 					pthread_cancel(pt3);
 					lcd_show_bmp("picture/readcard_timeout_360_280.bmp",0,223,102,360,280);
-					sleep(3);
+					sleep(2);
 					lcd_recover(p_menu_nt,223,102,360,280);
 					return;
 				}
@@ -123,7 +123,7 @@ void exit_car(Parknum parknum)
 							printf("超时建立线程失败\n");
 							return;							
 						}
-						sleep(3);
+						sleep(2);
 						lcd_recover(p_menu_nt,223,102,360,280);
 						return;
 					}
@@ -148,7 +148,7 @@ void exit_car(Parknum parknum)
 							printf("超时建立线程失败\n");
 							return;							
 						}
-						sleep(3);
+						sleep(2);
 						lcd_recover(p_menu_nt,223,102,360,280);
 						return;
 					}
@@ -215,7 +215,7 @@ void exit_car(Parknum parknum)
 					park[parknum-1].parkingnum = 0;
 					park[parknum-1].reserve = 0;
 					lcd_show_bmp("picture/onceagain_360_280.bmp",0,223,102,360,280);
-					sleep(3);
+					sleep(2);
 					lcd_recover(p_menu_nt,223,102,360,280);
 					switch(parknum){
 						case num1:
@@ -273,7 +273,7 @@ void exit_car(Parknum parknum)
 				printf("超时建立线程失败\n");
 				return;							
 			}
-			sleep(3);
+			sleep(2);
 			lcd_recover(p_menu_nt,223,102,360,280);
 			return;
 		}
